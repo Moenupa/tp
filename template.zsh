@@ -1,5 +1,6 @@
 # --- templating ---
 alias tp=template
+hash -d template=$HOME/.template
 
 # tp: a create_w_template utility by github@moenupa
 # Generate files according to a template, ~/.template/<ext>/<name> -> ./<name>.<ext>
