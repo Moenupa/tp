@@ -38,7 +38,7 @@ template() {
 	fi
 
 	local spec="$1"
-	# expected format: <ext>/<filename>
+	# expected format: <ext>/<filename>.<ext>
 	if [[ "$spec" != */* ]]; then
 		echo "tp: template must be specified as <ext>/<name>" >&2
 		return 1
@@ -48,7 +48,7 @@ template() {
 
 	# organize templates by file extension
 	local src="$HOME/.template/$ext/$filename"
-	local dest="./${filename}.${ext}"
+	local dest="./${filename}"
 
 	# edge cases
 	if [[ ! -f "$src" ]]; then
@@ -86,16 +86,26 @@ _template_help() {
 	return 0
 }
 _template_comp() {
+	# Autocomplete in two folds: first folder (i.e. ext), then file
 	local dir="$HOME/.template"
 	local -a templates
 	if [[ -d "$dir" ]]; then
-		local d f ext
-		for d in "$dir"/*(/N); do
-			ext="${d##*/}"
-			for f in "$d"/*(N-.); do
-				[[ -f "$f" ]] && templates+=("${ext}/${f##*/}")
+		local d f ext fname
+		# If the current word contains '/', suggest files in that folder
+		if [[ $words[CURRENT] == */* ]]; then
+			ext="${words[CURRENT]%%/*}"
+			for f in "$dir/$ext"/*(N-.); do
+				# Only suggest files matching <ext>/<filename>.<ext>
+				fname="${f##*/}"
+				[[ -f "$f" && "$fname" == *.$ext ]] && templates+=("${ext}/${fname}")
 			done
-		done
+		else
+			# Suggest only folders (extensions)
+			for d in "$dir"/*(/N); do
+				ext="${d##*/}"
+				templates+=("${ext}/")
+			done
+		fi
 	fi
 
 	local -a values

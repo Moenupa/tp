@@ -4,9 +4,9 @@
 #SBATCH --cpus-per-gpu=8
 #SBATCH -p a100
 #SBATCH -t 30-00:00:00
-#SBATCH -o logs/job/%A_%a.out
-#SBATCH -e logs/job/%A_%a.err
-#SBATCH -J job
+#SBATCH -o logs/array/%A_%a.out
+#SBATCH -e logs/array/%A_%a.err
+#SBATCH -J job-array
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1
 #SBATCH --array=0-0
