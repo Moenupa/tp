@@ -4,13 +4,13 @@ import json
 from os import replace
 
 
-def minify_json(inp_path: str, _replace: bool = False, _indent: str = "") -> str:
+def minify_json(inp_path: str, _inplace: bool = False, _indent: str = "") -> str:
     out_path = f"{inp_path}.swp"
     with open(inp_path, "r") as inp, open(out_path, "w") as out:
         data = json.load(inp)
         json.dump(data, out, ensure_ascii=False, indent=_indent)
 
-    if _replace:
+    if _inplace:
         replace(out_path, inp_path)
 
     return out_path
@@ -39,4 +39,4 @@ def parse_args():
 if __name__ == "__main__":
     args = parse_args()
     for inp in args.input:
-        minify_json(inp, args.replace, "\t" if args.indent else "")
+        minify_json(inp, args.inplace, "\t" if args.indent else "")
