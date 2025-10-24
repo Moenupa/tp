@@ -1,7 +1,7 @@
 #!/bin/sh
 #SBATCH --nodes=1
 #SBATCH --mem=80G
-#SBATCH --cpus-per-gpu=16
+#SBATCH -c 16
 #SBATCH -p a100
 #SBATCH -t 30-00:00:00
 #SBATCH -o logs/cpuonly/%j.out
