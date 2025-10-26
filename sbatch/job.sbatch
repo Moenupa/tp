@@ -1,11 +1,11 @@
 #!/bin/sh
+#SBATCH -o logs/%x/%j.out
+#SBATCH -e logs/%x/%j.err
+#SBATCH -p a100
 #SBATCH --nodes=1
 #SBATCH --mem-per-gpu=80G
-#SBATCH --cpus-per-gpu=8
-#SBATCH -p a100
+#SBATCH --cpus-per-gpu=12
 #SBATCH -t 30-00:00:00
-#SBATCH -o logs/job/%j.out
-#SBATCH -e logs/job/%j.err
 #SBATCH -J job
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:1
