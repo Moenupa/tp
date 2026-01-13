@@ -1,3 +1,6 @@
 [submodule "gitignore"]
 	path = gitignore
 	url = https://github.com/github/gitignore.git
+[submodule "sbatch"]
+	path = sbatch
+	url = https://github.com/Moenupa/slurm
