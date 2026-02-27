@@ -1,10 +1,22 @@
-# --- templating ---
-alias tp=template
-hash -d template=$HOME/.template
-
+#!/usr/bin/env zsh
 # tp: a create_w_template utility by github@moenupa
 # Generate files according to a template, ~/.template/<ext>/<name> -> ./<name>.<ext>
+_template_help() {
+	echo "usage: tp [-w | --write] <ext>/<template>"
+	echo ""
+	echo "Create a file or print a template stored under ~/.template/<ext>/<template>"
+	echo ""
+	echo "Examples:"
+	echo "  tp py/script            # prints ~/.template/py/script to stdout"
+	echo "  tp -w py/script         # writes ./script.py from ~/.template/py/script"
+	echo ""
+	echo "Options:"
+	echo "  -w, --write    Write to ./<template>.<ext> (fails if exists)"
+	echo "  -h, --help     Show this help message"
+	return 0
+}
 
+alias tp=template
 template() {
 	# parse options: -w/--write (write to file), -h/--help
 	local write_mode=0
@@ -70,20 +82,6 @@ template() {
 	else
 		cat "$src"
 	fi
-}
-_template_help() {
-	echo "usage: tp [-w | --write] <ext>/<template>"
-	echo ""
-	echo "Create a file or print a template stored under ~/.template/<ext>/<template>"
-	echo ""
-	echo "Examples:"
-	echo "  tp py/script            # prints ~/.template/py/script to stdout"
-	echo "  tp -w py/script         # writes ./script.py from ~/.template/py/script"
-	echo ""
-	echo "Options:"
-	echo "  -w, --write    Write to ./<template>.<ext> (fails if exists)"
-	echo "  -h, --help     Show this help message"
-	return 0
 }
 _template_comp() {
 	# Autocomplete in two folds: first folder (i.e. ext), then file

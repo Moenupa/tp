@@ -3,4 +3,4 @@
 	url = https://github.com/github/gitignore.git
 [submodule "sbatch"]
 	path = sbatch
-	url = https://github.com/Moenupa/slurm
+	url = https://github.com/Moenupa/ssrc
