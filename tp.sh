@@ -87,26 +87,20 @@ template() {
 		fi
 	fi
 
-	if [ $write_mode -eq 1 ]; then
-		if cp "$src" "$dest"; then
-			[ $verbose -eq 1 ] && printf "'%s' <- '%s'.\n" "$dest" "$src"
-			return 0
-		else
-			printf 'tp: failed to write %s\n' "$dest" >&2
-			return 1
-		fi
-	else
-		# Print the template to the user's terminal / pipe
+	if [ $write_mode -eq 0 ]; then
 		cat "$src"
 		return 0
 	fi
+
+	if cp "$src" "$dest"; then
+		[ $verbose -eq 1 ] && printf "'%s' <- '%s'.\n" "$dest" "$src"
+		return 0
+	else
+		printf 'tp: failed to write %s\n' "$dest" >&2
+		return 1
+	fi
 }
 
-# If the file is executed directly, forward the arguments to the function.
-# This makes the script usable both as a stand‑alone program and as a
-# source‑able library.
-if [ "${0##*/}" = "tp" ] || [ "${0##*/}" = "tp.sh" ]; then
-	# When executed, we are not inside a function, so we just call it.
+if [ -z "${BASH_SOURCE-}" ] && [ -z "${ZSH_EVAL_CONTEXT-}" ]; then
 	template "$@"
-	exit $?
 fi
