@@ -6,18 +6,10 @@
 #   Author: github@moenupa
 
 # ----------------------------------------------------------------------
-# Configuration
-# ----------------------------------------------------------------------
-# Directory that holds the templates.  Can be overridden by the user.
-# Example layout:
-#   $HOME/.template/py/script        →  a Python script template
-#   $HOME/.template/sh/rc           →  a shell rc file template
-TEMPLATE_DIR=${TEMPLATE_DIR:-"$HOME/.template"}
-
-# ----------------------------------------------------------------------
 # Helper: print usage / help
 # ----------------------------------------------------------------------
 _template_help() {
+	TEMPLATE_DIR=${TEMPLATE_DIR:-"$HOME/.template"}
 	printf 'usage: tp [-w|--write] [-f|--force] [-v|--verbose] <ext>/<template>\n'
 	printf '\n'
 	printf 'Create a file or print a template stored under %s/<ext>/<template>\n' \
@@ -37,6 +29,7 @@ _template_help() {
 }
 
 template() {
+	TEMPLATE_DIR=${TEMPLATE_DIR:-"$HOME/.template"}
 	# Default option values
 	write_mode=0
 	force_mode=0
@@ -103,4 +96,5 @@ template() {
 
 if [ -z "${BASH_SOURCE-}" ] && [ -z "${ZSH_EVAL_CONTEXT-}" ]; then
 	template "$@"
+	exit $?
 fi
